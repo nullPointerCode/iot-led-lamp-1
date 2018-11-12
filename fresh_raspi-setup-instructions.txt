@@ -1,0 +1,21 @@
+Setup Info:
+
+to enable ssh on a headless pi:
+create an empty file ssh in the boot folder
+create a file called wpa_supplicant.conf in the boot folder with the following:
+
+country=US
+network={
+    ssid="wif_name"
+    psk="pass"
+}
+
+follow instructions on: https://github.com/jgarff/rpi_ws281x
+sudo apt-get install build-essential python-dev git scons swig
+run 'scons' from the source directory
+run 'python setup.py install' from the python directory
+
+Enable run on startup by editing:
+sudo nano /etc/rc.local
+and adding:
+sudo python /home/pi/sample.py & at the end
