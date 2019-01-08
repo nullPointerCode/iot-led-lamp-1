@@ -54,19 +54,21 @@ class Server(BaseHTTPRequestHandler):
             self.wfile.write(help_str)
             return
 
-        self.wfile.write("OK!")
         if path.startswith('/brightness'):
             # adjust led brightness
             temp = path.split('-')
             if len(temp) == 2:
                 brightness_val = int(temp[1].strip())
                 set_brightness(brightness_val)
+                self.wfile.write('Brightness set to: ' + str(brightness_val))
         elif path == '/off':
             # turn off leds
             turn_off()
+            self.wfile.write('Turned off')
         elif path == '/on':
             # turn on leds
             turn_on()
+            self.wfile.write('Turned on')
         elif path.startswith('/colors-'):
             # set specific colors
             temp = path.split('-')
@@ -75,6 +77,7 @@ class Server(BaseHTTPRequestHandler):
                 green = (int(temp[2].strip()) * 255) / 100
                 blue = (int(temp[3].strip()) * 255) / 100
                 set_color(red, green, blue)
+                self.wfile.write('Set color to: ' + str(temp))
         elif path == '/rainbow':
             # rainbow colors
             rainbow()
